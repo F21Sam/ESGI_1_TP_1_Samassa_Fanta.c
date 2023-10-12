@@ -2,9 +2,18 @@
 
 #include <stdlib.h>
 
+/*int main() {
+    double reel;
+    printf("entrer un reel : ");
+    scanf("%lf", &reel);
+    printf("voici votre reel : %lf\n",reel);
+exit(EXIT_SUCCESS);
+}*/
+
 int main() {
 
-int variable = 42;
-printf("Valeur de variable : %d\n", variable);
-printf("Adresse de variable : %p\n", &variable);
+        float pi = 3.14;
+        printf("pi est egale a %g\n",3.14);
+    /*pourquoi ca n'affiche pas pi*/
+    exit(EXIT_SUCCESS);
 }
