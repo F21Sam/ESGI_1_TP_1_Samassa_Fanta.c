@@ -1,0 +1,19 @@
+#include <stdio.h>
+
+#include <stdlib.h>
+
+
+int main() {
+
+    float n1 , n2;
+
+        printf("saisir deux reels svp \n")
+
+        scanf("%f  %f\n ", &n1+n2)
+        printf("n1+n2")
+        scanf("%f  %f\n ", &n1-n2)
+        printf("n1-n2")
+        scanf("%f  %f\n " , &n1*n2)
+        printf("n1*n2")
+  exit(EXIT_SUCCESS)      
+}
