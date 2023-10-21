@@ -15,3 +15,6 @@ int main() {
     /*on a mis des paratheses sur les operations prioritaires*/
 exit(EXIT_SUCCESS);
 }
+
+
+
