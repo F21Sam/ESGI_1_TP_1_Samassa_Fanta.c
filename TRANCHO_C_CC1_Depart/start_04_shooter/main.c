@@ -25,33 +25,112 @@ int av;
 void joueur_se_dirige_vers(int tx, int ty) {
   /* TODO : déplacer le joueur (px, py) vers la cible (tx, ty) */
   /* par pas de (pv)                                           */
+  // Calculer la distance entre la position actuelle du joueur et la cible
+    int distance = sqrt((tx - px) * (tx - px) + (ty - py) * (ty - py));
+    
+    // Si le joueur est déjà à la cible, ne rien faire
+    if (distance == 0) {
+        return;
+    }
+
+    // Calculer le déplacement nécessaire pour se rapprocher de la cible
+    int deplacement_x = (tx - px) * pv / distance;
+    int deplacement_y = (ty - py) * pv / distance;
+
+    // Mettre à jour la position du joueur
+    px += deplacement_x;
+    py += deplacement_y;
 }
 
 void adversaire_se_dirige_vers(int tx, int ty) {
   /* TODO : déplacer l'adversaire (ax, ay) vers la cible       */
   /* (tx, ty) par pas de (av)                                  */
+  // Calculer la distance entre la position actuelle de l'adversaire et la cible
+    int distance = sqrt((tx - ax) * (tx - ax) + (ty - ay) * (ty - ay));
+    
+    // Si l'adversaire est déjà à la cible, ne rien faire
+    if (distance == 0) {
+        return;
+    }
+
+    // Calculer le déplacement nécessaire pour se rapprocher de la cible
+    int deplacement_x = (tx - ax) * av / distance;
+    int deplacement_y = (ty - ay) * av / distance;
+
+    // Mettre à jour la position de l'adversaire
+    ax += deplacement_x;
+    ay += deplacement_y;
 }
+
 
 void joueur_regarde(int tx, int ty) {
   /* TODO : orienter la ligne de tir (slpx, slpy) vers         */
   /* (tx, ty)                                                  */
+  // Calculer la direction de la ligne de tir (vecteur entre le joueur et la cible)
+    slpx = tx - px;
+    slpy = ty - py;
+    
+    // Normaliser le vecteur (le rendre unitaire)
+    int distance = sqrt(slpx * slpx + slpy * slpy);
+    if (distance != 0) {
+        slpx /= distance;
+        slpy /= distance;
+    }
 }
 
 int distance_tir(int x, int y) {
   /* TODO : calculer la distance de la position (x, y) à la    */
-  /* ligne de tir et remplacer 0x7fffffff par cette valeur     */
-  return 0x7fffffff;
+  /* ligne de tir et remplacer 0x7fffffff par cette valeur     
+  return 0x7fffffff;*/
+  // Calcul de la distance entre (x, y) et la ligne de tir du joueur (slpx, slpy)
+    int dx = x - px;
+    int dy = y - py;
+    
+    // Utilisation du théorème de Pythagore pour calculer la distance
+    int distance = sqrt(dx * dx + dy * dy);
+    
+    return distance;
 }
 
 void place_adversaire() {
   /* TODO : placer l'adversaire (ax, ay) aléatoirement en      */
   /* bordure de la fenêtre (largeur, hauteur)                  */
+
+// Générer un nombre aléatoire entre 0 et 3 pour choisir une bordure
+    int bordure = rand() % 4;  // 0: haut, 1: droite, 2: bas, 3: gauche
+
+    // Coordonnées initiales de l'adversaire
+    ax = 0;
+    ay = 0;
+
+    // Sélectionner une bordure et ajuster les coordonnées en conséquence
+    switch (bordure) {
+        case 0:  // Haut
+            ax = rand() % largeur;
+            break;
+        case 1:  // Droite
+            ax = largeur;
+            ay = rand() % hauteur;
+            break;
+        case 2:  // Bas
+            ax = rand() % largeur;
+            ay = hauteur;
+            break;
+        case 3:  // Gauche
+            ay = rand() % hauteur;
+            break;
+    }
 }
 
 int distance_joueur(int x, int y) {
   /* TODO : calculer la distance d'une position (x, y) au      */
-  /* joueur (px, py)                                           */
-  return 0x7fffffff;
+  /* joueur (px, py)                                           
+  return 0x7fffffff;*/
+int distance_joueur(int x, int y) {
+    int dx = x - px;
+    int dy = y - py;
+    return dx * dx + dy * dy;
+}
 }
 
 void affichage(SDL_Surface * ecran) {
@@ -65,7 +144,7 @@ void affichage(SDL_Surface * ecran) {
   lineRGBA(ecran, px, py, slpx, slpy, 102, 255, 102, 255);
 }
 
-int main() {
+int main(int argc, char *argv[]) {
   srand(time(NULL));
   /* Création d'une fenêtre SDL : */
   if(SDL_Init(SDL_INIT_EVERYTHING) != 0) {

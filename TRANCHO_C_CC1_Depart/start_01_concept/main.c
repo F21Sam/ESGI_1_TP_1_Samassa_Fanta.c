@@ -21,7 +21,7 @@
 int main() {
 	unsigned int c = 0;/* j'ai change le unsigned char en unsigned int pour pouvoir depasser 255 et avoir plus d'espace*/
 	int k;
-	printf("Entrez une clé : ");
+	printf("Entrez une clé : ");/*la clé 42 ne peut marcher car nous sommes sur une base 100. Il nous faut minimum le nombre 101 pour pouvoir coder et décoder notre caractère*/
 	scanf("%d", &k);
 	printf("Entrez un caractère : ");
 	scanf(" %u", &c);/*j'ai mis un espace devant %c pour permettre de revenir a la ligne*/
